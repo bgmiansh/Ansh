@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💖</title>
+    <style>
+        /* Import a romantic font */
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap');
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 50%, #ffd4e5 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts background animation */
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .heart-bg {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 105, 180, 0.3);
+            animation: float-up 15s infinite ease-in;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main card container */
+        .card {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: fadeIn 0.8s ease-in;
+            z-index: 10;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Main heading */
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #ff69b4;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+            line-height: 1.3;
+        }
+
+        /* Playful message shown when "No" is clicked */
+        .playful-message {
+            font-size: 1.2em;
+            color: #ff1493;
+            margin: 20px 0;
+            min-height: 30px;
+            font-weight: 500;
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Button container */
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* Button base styles */
+        button {
+            font-family: 'Poppins', sans-serif;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Yes button styling */
+        .yes-btn {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            background: linear-gradient(135deg, #4d9c2a 0%, #98d054 100%);
+        }
+
+        /* No button styling */
+        .no-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa5a5 100%);
+            color: white;
+        }
+
+        .no-btn:hover {
+            background: linear-gradient(135deg, #ff5252 0%, #ff9696 100%);
+        }
+
+        /* Success message after clicking Yes */
+        .success-message {
+            display: none;
+            animation: fadeInScale 0.8s ease;
+        }
+
+        .success-message h2 {
+            font-family: 'Pacifico', cursive;
+            color: #ff1493;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .success-message p {
+            font-size: 1.2em;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Confetti hearts animation */
+        .confetti {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti-heart {
+            position: absolute;
+            font-size: 30px;
+            animation: confetti-fall 3s ease-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Pulsating heart decoration */
+        .heart-decoration {
+            font-size: 50px;
+            margin-bottom: 20px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .card {
+                padding: 40px 25px;
+            }
+
+            button {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+
+            .playful-message {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Main card -->
+    <div class="card">
+        <div class="heart-decoration">💖</div>
+        
+        <!-- Initial content -->
+        <div id="initialContent">
+            <h1>Will you be my Valentine? 💖</h1>
+            <p class="playful-message" id="playfulMessage"></p>
+            
+            <div class="buttons">
+                <button class="yes-btn" id="yesBtn">Yes 💕</button>
+                <button class="no-btn" id="noBtn">No 😅</button>
+            </div>
+        </div>
+
+        <!-- Success message (hidden initially) -->
+        <div class="success-message" id="successMessage">
+            <h2>Yay! 🎉💖</h2>
+            <p>You just made my world brighter. I'm so lucky to have you 💖</p>
+            <p>Every moment with you feels like a dream come true. You're my sunshine on cloudy days, my laughter in silent moments, and my forever Valentine. 💕</p>
+            <div style="font-size: 60px; margin-top: 20px;">
+                💑❤️💐
+            </div>
+        </div>
+    </div>
+    <script>
+        // Array of playful messages when "No" is clicked
+        const playfulMessages = [
+            "Think once again 🥺",
+            "Are you really sure? 💔",
+            "Just try the green button once 😉",
+            "My heart is waiting 💘",
+            "Pretty please? 🌹",
+            "Give us a chance 💝",
+            "Don't break my heart 😢",
+            "I promise to make you smile every day 😊",
+            "You're making me blush 😳",
+            "The green button won't bite 🥰",
+            "One 'Yes' can change everything 💫",
+            "I'll take that as a maybe? 💭"
+        ];
+
+        let messageIndex = 0;
+
+        // Get elements
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const playfulMessage = document.getElementById('playfulMessage');
+        const initialContent = document.getElementById('initialContent');
+        const successMessage = document.getElementById('successMessage');
+
+        // Create floating hearts in background
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const heartCount = 15;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-bg';
+                heart.textContent = '💕';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 15 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        // Create confetti hearts animation
+        function createConfetti() {
+            const confettiContainer = document.createElement('div');
+            confettiContainer.className = 'confetti';
+            document.body.appendChild(confettiContainer);
+
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💘'];
+            const confettiCount = 50;
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-heart';
+                confetti.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                confettiContainer.appendChild(confetti);
+            }
+
+            // Remove confetti after animation
+            setTimeout(() => {
+                confettiContainer.remove();
+            }, 5000);
+        }
+
+        // Handle "No" button click
+        noBtn.addEventListener('click', () => {
+            // Show playful message
+            playfulMessage.textContent = playfulMessages[messageIndex];
+            playfulMessage.style.animation = 'none';
+            
+            // Trigger animation restart
+            setTimeout(() => {
+                playfulMessage.style.animation = 'bounce 0.5s ease';
+            }, 10);
+
+            // Move to next message (cycle through array)
+            messageIndex = (messageIndex + 1) % playfulMessages.length;
+
+            // Make the No button slightly smaller each time (playful effect)
+            const currentScale = parseFloat(noBtn.style.transform.replace('scale(', '').replace(')', '')) || 1;
+            if (currentScale > 0.6) {
+                noBtn.style.transform = `scale(${currentScale - 0.1})`;
+            }
+
+            // Make the Yes button slightly bigger (playful encouragement)
+            const yesCurrentScale = parseFloat(yesBtn.style.transform.replace('scale(', '').replace(')', '')) || 1;
+            if (yesCurrentScale < 1.3) {
+                yesBtn.style.transform = `scale(${yesCurrentScale + 0.05})`;
+            }
+        });
+
+        // Handle "Yes" button click
+        yesBtn.addEventListener('click', () => {
+            // Hide initial content
+            initialContent.style.display = 'none';
+            
+            // Show success message
+            successMessage.style.display = 'block';
+            
+            // Create confetti effect
+            createConfetti();
+            
+            // Change card background with gradient animation
+            const card = document.querySelector('.card');
+            card.style.background = 'linear-gradient(135deg, #fff0f5 0%, #ffe4e9 100%)';
+        });
+
+        // Initialize floating hearts when page loads
+        createFloatingHearts();
+    </script>
+</body>
+</html>
+
